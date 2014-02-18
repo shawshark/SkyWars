@@ -18,6 +18,7 @@ public class Tasks {
 	public void earlyStart() {
 		count = 160; // 2 min.
 		Bukkit.broadcastMessage(m.prefix + ChatColor.YELLOW + " The game will start in 2 minutes!");
+		countDown();
 	}
 	
 	public void countDown() {
