@@ -13,6 +13,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 public class PlayerListener implements Listener {
 	
 	public main m;
+	public Boolean twoplayersJoined = false;
 	
 	public PlayerListener(main m) {
 		this.m = m;
@@ -21,6 +22,7 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void PlayerJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
+		PermissionUser user = PermissionsEx.getUser(p);
 		
 		/* send them to the hub if the game has already started, plus don't run the rest of the event. */
 		if(m.isGame) {
@@ -32,10 +34,18 @@ public class PlayerListener implements Listener {
 			return;
 		}
 		
-		PermissionUser user = PermissionsEx.getUser(p);
-		
 		int playersOnline = m.getServer().getOnlinePlayers().length;
 		int playersMax = m.getServer().getMaxPlayers();
+		
+		/* if there is 2 players online. */
+		if(playersOnline == 2) {
+			/* if this is the first time they have. */
+			if(!twoplayersJoined) {
+				/* set boolean to true. */
+				twoplayersJoined = true;
+				// run an early start task..
+			}
+		}
 		
 		String joinMessage = user.getPrefix() + p.getName() + ChatColor.BLUE + " has joined the game!" + ChatColor.GRAY + 
 				"(" + ChatColor.RED + playersOnline + ChatColor.GRAY + "/" + ChatColor.RED + playersMax + ChatColor.GRAY + ")";
