@@ -22,10 +22,13 @@ public class PlayerListener implements Listener {
 	public void PlayerJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		
-		/* send them to the hub, plus don't run the rest of the event. */
+		/* send them to the hub if the game has already started, plus don't run the rest of the event. */
 		if(m.isGame) {
+			/* make user perform /server hub */
 			p.performCommand("server hub");
+			/* cancel out the join message */
 			e.setJoinMessage(null);
+			/* Dont run rest of code. */
 			return;
 		}
 		
